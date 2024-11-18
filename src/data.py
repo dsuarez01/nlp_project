@@ -9,7 +9,10 @@ class DataPreprocessor:
         self.label_encoder = LabelEncoder()
 
     def encode_lyrics(self, lyrics):
-        return self.tokenizer(list(lyrics), **self.encoder_config)
+        '''
+        Expects lyrics to be list.
+        '''
+        return self.tokenizer(lyrics, **self.encoder_config)
 
     def encode_tags(self, tags):
         return self.label_encoder.fit_transform(tags)

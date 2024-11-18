@@ -1,13 +1,22 @@
 import pickle
 import pandas as pd
+import os
 
 from torch.utils.data import Subset
+import wandb
 
+from src.utils import load_env_file
 from src.train import TrainerWrapper
 from src.models import BertModel
 from src.data import DataPreprocessor, SongDataset, train_val_split
 
 def main():
+    # load env variables
+    load_env_file("./.env") # script should be run from root dir
+
+    # initialize wandb
+    wandb.init(project_name='nlp_project')
+
     # get data
     songs_df = pd.read_csv('./data/year_limited_songs.csv', engine='python')
     

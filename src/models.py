@@ -3,9 +3,9 @@ from transformers import BertForSequenceClassification
 from peft import (
     LoraConfig,
     get_peft_model,
-    get_peft_model_state_dict, # not in use
-    prepare_model_for_kbit_training, # not in use
-    set_peft_model_state_dict, # not in use
+    get_peft_model_state_dict, # currently not in use
+    prepare_model_for_kbit_training, # currently not in use
+    set_peft_model_state_dict, # currently not in use
 )
 
 class BertModel:
