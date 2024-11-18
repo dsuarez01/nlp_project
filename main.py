@@ -55,6 +55,7 @@ def main():
     # set up training args and trainer
     training_args = {
         'output_dir':'./results',
+        'run_name': 'my_unique_run_name',
         'num_train_epochs':100,
         'per_device_train_batch_size':16,
         'per_device_eval_batch_size':16,
@@ -62,7 +63,7 @@ def main():
         'weight_decay':0.01,
         'logging_dir':'./logs',
         'logging_steps':10,
-        'evaluation_strategy':'epoch',
+        'eval_strategy':'epoch',
         'save_strategy':'epoch',
         'dataloader_num_workers':4,
         'dataloader_pin_memory': True,
