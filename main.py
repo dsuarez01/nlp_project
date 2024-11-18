@@ -10,10 +10,10 @@ from src.data import DataPreprocessor, SongDataset, train_val_split
 
 def main():
     # load env variables
-    load_env_file("./.env") # script should be run from root dir
+    load_env_file("./.env")
 
     # initialize wandb
-    wandb.init(project_name='nlp_project')
+    wandb.init(project='nlp_project')
 
     # get data
     songs_df = pd.read_csv('./data/year_limited_songs.csv', engine='python')
@@ -25,7 +25,7 @@ def main():
         'max_length':256,
         'return_tensors':'pt',
     }
-    preprocessor = DataPreprocessor(tokenizer_name='bert-base-uncased', encoder_config)
+    preprocessor = DataPreprocessor('bert-base-uncased', encoder_config)
     encoded_lyrics = preprocessor.encode_lyrics(list(songs_df['lyrics']))
     encoded_tags = preprocessor.encode_tags(songs_df['tag'])
     
@@ -39,11 +39,11 @@ def main():
 
     # instantiate lora_config + model
     lora_config = {
-        r=16,
-        lora_alpha=16,
-        lora_dropout=0.05,
-        bias='none',
-        task_type='SEQ_CLS',
+        'r':16,
+        'lora_alpha':16,
+        'lora_dropout':0.05,
+        'bias':'none',
+        'task_type':'SEQ_CLS',
     }
     model = BertModel(
         base_model_name='bert-base-uncased',
