@@ -5,7 +5,7 @@ import wandb
 
 from src.utils import load_env_file
 from src.train import TrainerWrapper
-from src.models import BertModel
+from src.models import BertModelWrapper
 from src.data import DataPreprocessor, SongDataset, train_val_split
 
 def main():
@@ -45,11 +45,12 @@ def main():
         'bias':'none',
         'task_type':'SEQ_CLS',
     }
-    model = BertModel(
+    model_wrapper = BertModelWrapper(
         base_model_name='./bert-base-uncased',
         num_labels=preprocessor.get_num_classes(), # only ever call after encode_tags
         lora_config=lora_config,
     )
+    peft_model = model_wrapper.model
 
     # set up training args and trainer
     training_args = {
@@ -61,20 +62,20 @@ def main():
         'weight_decay':0.01,
         'logging_dir':'./logs',
         'logging_steps':10,
-        'evaluation_strategy':"epoch",
-        'save_strategy':"epoch",
+        'evaluation_strategy':'epoch',
+        'save_strategy':'epoch',
         'dataloader_num_workers':4,
         'dataloader_pin_memory': True,
         'load_best_model_at_end':True,
         'report_to':'wandb',
     }
     
-    trainer = TrainerWrapper(model, training_args)
+    trainer = TrainerWrapper(peft_model, training_args)
     trainer.train(train_dataset, val_dataset)
 
     # saving model fine-tuned w/ PEFT, tokenizer and label encoder 
     # to dir ./peft_song_bert_model
-    model.save_pretrained('./peft_song_bert_model') 
+    peft_model.save_pretrained('./peft_song_bert_model') 
     tokenizer.save_pretrained('./peft_song_bert_model')
 
     with open('./peft_song_bert_model/label_encoder.pkl', 'wb') as le_file:

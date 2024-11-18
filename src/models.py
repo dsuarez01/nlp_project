@@ -7,7 +7,7 @@ from peft import (
     set_peft_model_state_dict, # currently not in use
 )
 
-class BertModel:
+class BertModelWrapper:
     def __init__(self, base_model_name, num_labels, lora_config):
         super().__init__()
         self.base_model = BertForSequenceClassification.from_pretrained(base_model_name, num_labels=num_labels)
