@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=t64s
+#SBATCH --job-name=hello
 #SBATCH --partition=xeon-g6-volta
 #SBATCH --output=/home/gridsan/dsuarez/nlp/output_%j.log
 #SBATCH --error=/home/gridsan/dsuarez/nlp/error_%j.log

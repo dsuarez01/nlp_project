@@ -1,3 +1,5 @@
+import os
+
 def load_env_file(filepath):
     '''
     Load env variables from a key-value formatted .env file.
