@@ -2,7 +2,7 @@ from transformers import Trainer, TrainingArguments
 
 class TrainerWrapper:
     def __init__(self, model, training_args):
-        self.model = model,
+        self.model = model
         self.training_args = TrainingArguments(**training_args)
         self.trainer = None
 

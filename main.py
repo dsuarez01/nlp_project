@@ -68,6 +68,7 @@ def main():
         'dataloader_pin_memory': True,
         'load_best_model_at_end':True,
         'report_to':'wandb',
+        'disable_tqdm': True, # reduce I/O
     }
     
     trainer = TrainerWrapper(peft_model, training_args)

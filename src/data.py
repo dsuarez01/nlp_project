@@ -1,3 +1,4 @@
+import torch
 from torch.utils.data import Subset, Dataset
 from transformers import BertTokenizer
 from sklearn.preprocessing import LabelEncoder
