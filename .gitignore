@@ -3,4 +3,4 @@ slurm_output/
 slurm_error/
 wandb/
 script.sh
-bert-based-uncased/
+bert-base-uncased/
