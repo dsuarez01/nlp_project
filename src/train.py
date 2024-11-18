@@ -9,7 +9,7 @@ class TrainerWrapper:
     def train(self, train_dataset, eval_dataset):
         self.trainer = Trainer(
             model=self.model,
-            args=training_args,
+            args=self.training_args,
             train_dataset=train_dataset,
             eval_dataset=eval_dataset,
         )
