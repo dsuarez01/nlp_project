@@ -1,3 +1,5 @@
+from transformers import Trainer, TrainingArguments
+
 class TrainerWrapper:
     def __init__(self, model, training_args):
         self.model = model,

@@ -1,4 +1,5 @@
 import pickle
+import pandas as pd
 
 from torch.utils.data import Subset
 
@@ -10,15 +11,15 @@ def main():
     # get data
     songs_df = pd.read_csv('./data/year_limited_songs.csv', engine='python')
     
-    # instantiate DataPreprocessor
-    preprocessor = DataPreprocessor(max_length=256, tokenizer_name='bert-base-uncased')
+    # instantiate data preprocessor
     encoder_config = {
-        'padding': 'max_length', 
-        'truncation':True, 
-        'max_length':self.max_length, 
-        'return_tensors':'pt'
+        'padding':'max_length',
+        'truncation':True,
+        'max_length':256,
+        'return_tensors':'pt',
     }
-    encoded_lyrics = preprocessor.encode_lyrics(list(songs_df['lyrics']), **encoder_config)
+    preprocessor = DataPreprocessor(tokenizer_name='bert-base-uncased', encoder_config)
+    encoded_lyrics = preprocessor.encode_lyrics(list(songs_df['lyrics']))
     encoded_tags = preprocessor.encode_tags(songs_df['tag'])
     
     # instantiate song dataset, get train/val split
@@ -34,12 +35,12 @@ def main():
         r=16,
         lora_alpha=16,
         lora_dropout=0.05,
-        bias="none",
-        task_type="SEQ_CLS",
+        bias='none',
+        task_type='SEQ_CLS',
     }
     model = BertModel(
         base_model_name='bert-base-uncased',
-        num_labels=preprocessor.get_num_classes(),
+        num_labels=preprocessor.get_num_classes(), # only ever call after encode_tags
         lora_config=lora_config,
     )
 
@@ -55,8 +56,10 @@ def main():
         'logging_steps':10,
         'evaluation_strategy':"epoch",
         'save_strategy':"epoch",
+        'dataloader_num_workers':4,
+        'dataloader_pin_memory': True,
         'load_best_model_at_end':True,
-        'report_to':"wandb",
+        'report_to':'wandb',
     }
     
     trainer = TrainerWrapper(model, training_args)
@@ -64,10 +67,10 @@ def main():
 
     # saving model fine-tuned w/ PEFT, tokenizer and label encoder 
     # to dir ./peft_song_bert_model
-    model.save_pretrained("./peft_song_bert_model") 
-    tokenizer.save_pretrained("./peft_song_bert_model")
+    model.save_pretrained('./peft_song_bert_model') 
+    tokenizer.save_pretrained('./peft_song_bert_model')
 
-    with open("./peft_song_bert_model/label_encoder.pkl", "wb") as le_file:
+    with open('./peft_song_bert_model/label_encoder.pkl', 'wb') as le_file:
         pickle.dump(label_encoder, le_file)
 
 if __name__ == '__main__':

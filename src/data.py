@@ -3,13 +3,13 @@ from transformers import BertTokenizer
 from sklearn.preprocessing import LabelEncoder
 
 class DataPreprocessor:
-    def __init__(self, max_length=256, tokenizer_name='bert-base-uncased'):
+    def __init__(self, tokenizer_name, encoder_config):
         self.tokenizer = BertTokenizer.from_pretrained(tokenizer_name)
-        self.max_length = max_length
+        self.encoder_config = encoder_config
         self.label_encoder = LabelEncoder()
 
-    def encode_lyrics(self, lyrics, encoder_config):
-        return self.tokenizer(list(lyrics), **encoder_config)
+    def encode_lyrics(self, lyrics):
+        return self.tokenizer(list(lyrics), **self.encoder_config)
 
     def encode_tags(self, tags):
         return self.label_encoder.fit_transform(tags)
