@@ -25,7 +25,7 @@ def main():
         'max_length':256,
         'return_tensors':'pt',
     }
-    preprocessor = DataPreprocessor('bert-base-uncased', encoder_config)
+    preprocessor = DataPreprocessor('./bert-base-uncased', encoder_config)
     encoded_lyrics = preprocessor.encode_lyrics(list(songs_df['lyrics']))
     encoded_tags = preprocessor.encode_tags(songs_df['tag'])
     
@@ -46,7 +46,7 @@ def main():
         'task_type':'SEQ_CLS',
     }
     model = BertModel(
-        base_model_name='bert-base-uncased',
+        base_model_name='./bert-base-uncased',
         num_labels=preprocessor.get_num_classes(), # only ever call after encode_tags
         lora_config=lora_config,
     )
