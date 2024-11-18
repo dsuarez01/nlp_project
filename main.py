@@ -55,7 +55,7 @@ def main():
     # set up training args and trainer
     training_args = {
         'output_dir':'./results',
-        'run_name': 'my_unique_run_name',
+        'run_name': 'insert_run_name_here',
         'num_train_epochs':100,
         'per_device_train_batch_size':16,
         'per_device_eval_batch_size':16,

@@ -4,3 +4,4 @@ slurm_error/
 wandb/
 script.sh
 bert-base-uncased/
+results/
