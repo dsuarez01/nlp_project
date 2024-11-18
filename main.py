@@ -29,6 +29,11 @@ def main():
     encoded_lyrics = preprocessor.encode_lyrics(list(songs_df['lyrics']))
     encoded_tags = preprocessor.encode_tags(songs_df['tag'])
     
+    # save the tokenizer, pickle the label encoder
+    preprocessor.tokenizer.save_pretrained('./peft_song_bert_model')
+    with open('./peft_song_bert_model/label_encoder.pkl', 'wb') as le_file:
+        pickle.dump(preprocessor.label_encoder, le_file)
+
     # instantiate song dataset, get train/val split
     song_dataset = SongDataset(
         encoded_lyrics['input_ids'],
@@ -56,11 +61,11 @@ def main():
     training_args = {
         'output_dir':'./results',
         'run_name': 'insert_run_name_here',
-        'num_train_epochs':100,
+        'num_train_epochs':10,
         'per_device_train_batch_size':16,
         'per_device_eval_batch_size':16,
         'warmup_steps':500,
-        'weight_decay':0.01,
+        'weight_decay':0.001,
         'logging_dir':'./logs',
         'logging_steps':10,
         'eval_strategy':'epoch',
@@ -75,13 +80,8 @@ def main():
     trainer = TrainerWrapper(peft_model, training_args)
     trainer.train(train_dataset, val_dataset)
 
-    # saving model fine-tuned w/ PEFT, tokenizer and label encoder 
-    # to dir ./peft_song_bert_model
+    # saving model fine-tuned w/ PEFT
     peft_model.save_pretrained('./peft_song_bert_model') 
-    tokenizer.save_pretrained('./peft_song_bert_model')
-
-    with open('./peft_song_bert_model/label_encoder.pkl', 'wb') as le_file:
-        pickle.dump(label_encoder, le_file)
 
 if __name__ == '__main__':
     main()
