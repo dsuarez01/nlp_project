@@ -59,13 +59,13 @@ def main():
 
     # set up training args and trainer
     training_args = {
-        'output_dir':'./results',
-        'run_name': 'insert_run_name_here',
-        'num_train_epochs':10,
+        'output_dir':'./results/run_75',
+        'run_name': 'run_75_112224',
+        'num_train_epochs':75,
         'per_device_train_batch_size':16,
         'per_device_eval_batch_size':16,
         'warmup_steps':500,
-        'weight_decay':0.001,
+        'weight_decay':0.01,
         'logging_dir':'./logs',
         'logging_steps':10,
         'eval_strategy':'epoch',
@@ -78,10 +78,10 @@ def main():
     }
     
     trainer = TrainerWrapper(peft_model, training_args)
-    trainer.train(train_dataset, val_dataset)
+    trainer.train(train_dataset, val_dataset, preprocessor.tokenizer)
 
     # saving model fine-tuned w/ PEFT
-    peft_model.save_pretrained('./peft_song_bert_model') 
+    peft_model.save_pretrained('./peft_song_bert_model/run_75') 
 
 if __name__ == '__main__':
     main()
