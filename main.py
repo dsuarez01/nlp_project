@@ -5,7 +5,7 @@ import wandb
 
 from src.utils import load_env_file
 from src.train import TrainerWrapper
-from src.models import BertModelWrapper
+from src.models import BertModelWrapper, DistilBertModelWrapper
 from src.data import DataPreprocessor, SongDataset, train_val_split
 
 def main():
@@ -25,7 +25,7 @@ def main():
         'max_length':256,
         'return_tensors':'pt',
     }
-    preprocessor = DataPreprocessor('./bert-base-uncased', encoder_config)
+    preprocessor = DataPreprocessor('./distilbert-base-uncased', encoder_config)
     encoded_lyrics = preprocessor.encode_lyrics(list(songs_df['lyrics']))
     encoded_tags = preprocessor.encode_tags(songs_df['tag'])
     
@@ -48,10 +48,11 @@ def main():
         'lora_alpha':16,
         'lora_dropout':0.05,
         'bias':'none',
+        'target_modules':'all-linear',
         'task_type':'SEQ_CLS',
     }
-    model_wrapper = BertModelWrapper(
-        base_model_name='./bert-base-uncased',
+    model_wrapper = DistilBertModelWrapper(
+        base_model_name='./distilbert-base-uncased',
         num_labels=preprocessor.get_num_classes(), # only ever call after encode_tags
         lora_config=lora_config,
     )
@@ -59,9 +60,9 @@ def main():
 
     # set up training args and trainer
     training_args = {
-        'output_dir':'./results/run_75',
-        'run_name': 'run_75_112224',
-        'num_train_epochs':75,
+        'output_dir':'./results/dbert_run_100',
+        'run_name': 'dbert_run_100_112224',
+        'num_train_epochs':100,
         'per_device_train_batch_size':16,
         'per_device_eval_batch_size':16,
         'warmup_steps':500,
@@ -70,7 +71,7 @@ def main():
         'logging_steps':10,
         'eval_strategy':'epoch',
         'save_strategy':'epoch',
-        'dataloader_num_workers':4,
+        'dataloader_num_workers':0,
         'dataloader_pin_memory': True,
         'load_best_model_at_end':True,
         'report_to':'wandb',
@@ -81,7 +82,7 @@ def main():
     trainer.train(train_dataset, val_dataset, preprocessor.tokenizer)
 
     # saving model fine-tuned w/ PEFT
-    peft_model.save_pretrained('./peft_song_bert_model/run_75') 
+    peft_model.save_pretrained('./peft_song_bert_model/dbert_run_100')
 
 if __name__ == '__main__':
     main()

@@ -1,12 +1,12 @@
 import torch
 from torch.utils.data import Subset, Dataset
-from transformers import BertTokenizer
+from transformers import AutoTokenizer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
 class DataPreprocessor:
     def __init__(self, tokenizer_name, encoder_config):
-        self.tokenizer = BertTokenizer.from_pretrained(tokenizer_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.encoder_config = encoder_config
         self.label_encoder = LabelEncoder()
 
