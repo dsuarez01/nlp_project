@@ -16,12 +16,14 @@ Steps:
 
 ### Fine-Tuning (Optional):
 
-The fine-tuning was deployed on a NVIDIA A-100 GPU on Supercloud.
+The fine-tuning was deployed on a NVIDIA A100 GPU on Supercloud.
 
 To run the job:
 ```bash
 python main.py
-``` 
+```
+Any of the params may be adjusted -- we've included the parameters that contributed to the best runs and were used for downstream analysis. 
+
 ### Initial Data Processing (Optional):
 
 All data processing code should be accessible in the `initial_data_processing` folder, so this is not necessary. However, here are steps to run:
