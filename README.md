@@ -12,7 +12,7 @@ Make sure you have access to Google Colab and T4 GPU. Supercloud is recommended 
 
 Steps:
 1. Upload the `distilbert_models` and `data` folders to Google Drive and mount your Google Drive. Add your local path to this folder when mounting your Google Drive.
-2. Run the `clustering_and_date_classification_FINAL.ipynb` in Google Colab on 1 T4 GPU. 
+2. Run the `clustering_and_date_classification.ipynb` in Google Colab on 1 T4 GPU. 
 
 ### Fine-Tuning (Optional):
 
