@@ -29,7 +29,7 @@ The rest of the notebook is standalone and should be functional.
 ### Genre Clustering and Date Classificiation:
 
 Steps:
-1. Upload the `distilbert_models` and `data` folders to Google Drive
+1. Upload the `distilbert_models` and `data` folders to Google Drive and mount your Google Drive
 2. Run the clustering_and_date_classification_FINAL.ipynb in Google Colab on 1 T4 GPU. 
 
 
