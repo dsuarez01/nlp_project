@@ -18,11 +18,15 @@ Steps:
 
 The fine-tuning was deployed on a NVIDIA A100 GPU on Supercloud.
 
-To run the job:
-```bash
-python main.py
+To run the job, submitted via SLURM:
+
 ```
-Any of the params may be adjusted -- we've included the parameters that contributed to the best runs and were used for downstream analysis. 
+sbatch script.sh
+```
+
+A template script is available at `script.sh`.
+
+Any of the params concerning tuning in `main.py` may be adjusted. We've included the parameters that contributed to the best runs and were used for downstream analysis. Feel free to adjust them as needed.
 
 ### Initial Data Processing (Optional):
 
