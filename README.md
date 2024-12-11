@@ -1,1 +1,1 @@
-Run the clustering_and_date_classification.ipynb (the initial data processing csv has already been made and saved in the zip). When mounting your drive, change the link to the path to this entire zip folder to your own local path to this zip.
+Download our data here: [insert link]. Run the clustering_and_date_classification.ipynb in Google Colab (the initial data processing csv has already been made and saved in the zip). When running the code block to mount your drive, change the link to the path to this entire zip folder to your own local path to this zip.
