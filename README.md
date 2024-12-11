@@ -1,24 +1,7 @@
 ## Abstract
 
-Music is an immensely popular form of art –
-one that includes a relatively unique corpus of
-language in the form of lyrics. To examine the
-performance of modern NLP tools in evaluat-
-ing lyrics, we set the task of analyzing genres
-and eras of music using encoder and classifi-
-cation models, both in isolation and compara-
-tively. We find that a fine-tuned BERT model
-largely agrees with human comparative analy-
-sis of modern musical eras, but reaches novel
-conclusions when examining variation within
-a specific era of a specific genre, especially
-within rap. These results point towards a quali-
-tative gap between the ability to parse standard
-English and the ability to parse lyrics specifi-
-cally. Through data classification, the results
-also suggest the existence of specific distinc-
-tive eras of music, most primarily within the
-decades of the 1980s and the 2010s.
+Music is an immensely popular form of art – one that includes a relatively unique corpus of
+language in the form of lyrics. To examine the performance of modern NLP tools in evaluating lyrics, we set the task of analyzing genres and eras of music using encoder and classification models, both in isolation and comparatively. We find that a fine-tuned BERT model largely agrees with human comparative analysis of modern musical eras, but reaches novel conclusions when examining variation within a specific era of a specific genre, especially within rap. These results point towards a qualitative gap between the ability to parse standard English and the ability to parse lyrics specifically. Through data classification, the results also suggest the existence of specific distinctive eras of music, most primarily within the decades of the 1980s and the 2010s.
 
 ## Setup
 
