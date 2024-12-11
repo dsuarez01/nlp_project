@@ -77,6 +77,18 @@ def main():
         'save_strategy': 'epoch',
         'save_total_limit': 3,
         'dataloader_num_workers': 0,
+        'output_dir':'./results/dbert_run_100',
+        'run_name': 'dbert_run_100_112224',
+        'num_train_epochs':25, #ideal run was 25 epochs
+        'per_device_train_batch_size':16,
+        'per_device_eval_batch_size':16,
+        'warmup_steps':500,
+        'weight_decay':0.01,
+        'logging_dir':'./logs',
+        'logging_steps':10,
+        'eval_strategy':'epoch',
+        'save_strategy':'epoch',
+        'dataloader_num_workers':0,
         'dataloader_pin_memory': True,
         'load_best_model_at_end': True,
         'report_to': 'wandb',
@@ -87,7 +99,7 @@ def main():
     trainer.train(train_dataset, val_dataset, preprocessor.tokenizer)
 
     # saving model fine-tuned w/ PEFT
-    peft_model.save_pretrained('./peft_song_bert_model/dbert_run_100')
+    peft_model.save_pretrained('./peft_song_bert_model/dbert_run_25')
 
 if __name__ == '__main__':
     main()
