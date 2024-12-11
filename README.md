@@ -12,7 +12,7 @@ Make sure you have access to Google Colab and T4 GPU. Supercloud is recommended 
 
 Steps:
 1. Upload the `distilbert_models` and `data` folders to Google Drive and mount your Google Drive
-2. Run the clustering_and_date_classification_FINAL.ipynb in Google Colab on 1 T4 GPU. 
+2. Run the `clustering_and_date_classification_FINAL.ipynb` in Google Colab on 1 T4 GPU. 
 
 ### Fine-Tuning (Optional):
 
@@ -29,6 +29,6 @@ All data processing code should be accessible in the `initial_data_processing` f
 1. Download our large dataset [[here](https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information/code)].
 2. Upload this dataset to a Google Drive folder
 3. Mount the Google Drive folder and change the file path to load the csv accordingly
-4. Run `initial_data_processing.ipynb` with the appropriate file path to the csv. This file should result in and save a smaller and processed csv
+4. Run `initial_data_processing.ipynb` in Google Colab on 1 T4 GPU with the appropriate file path to the csv. This file should result in and save a smaller and processed csv
 
 The rest of the notebook is standalone and should be functional. 
