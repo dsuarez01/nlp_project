@@ -20,7 +20,7 @@ python main.py
 
 All data processing code should be accessible in the data processing folder. Steps to run:
 
-1. Download our data here: [insert link].
+1. Download our data here: [[insert link](https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information/code)].
 2. Upload this dataset to a Google Drive folder
 3. Mount the Google Drive folder and change the file path to load the csv accordingly
 
