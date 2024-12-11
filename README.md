@@ -24,10 +24,11 @@ python main.py
 ``` 
 ### Initial Data Processing (Optional):
 
-All data processing code should be accessible in the `initial_data_processing` folder. Steps to run:
+All data processing code should be accessible in the `initial_data_processing` folder, so this is not necessary. However, here are steps to run:
 
-1. Download our data [[here](https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information/code)].
+1. Download our large dataset [[here](https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information/code)].
 2. Upload this dataset to a Google Drive folder
 3. Mount the Google Drive folder and change the file path to load the csv accordingly
+4. Run `initial_data_processing.ipynb` with the appropriate file path to the csv. This file should result in and save a smaller and processed csv
 
 The rest of the notebook is standalone and should be functional. 
