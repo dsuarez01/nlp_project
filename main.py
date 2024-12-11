@@ -62,7 +62,7 @@ def main():
     training_args = {
         'output_dir':'./results/dbert_run_100',
         'run_name': 'dbert_run_100_112224',
-        'num_train_epochs':100,
+        'num_train_epochs':25, #ideal run was 25 epochs
         'per_device_train_batch_size':16,
         'per_device_eval_batch_size':16,
         'warmup_steps':500,
@@ -82,7 +82,7 @@ def main():
     trainer.train(train_dataset, val_dataset, preprocessor.tokenizer)
 
     # saving model fine-tuned w/ PEFT
-    peft_model.save_pretrained('./peft_song_bert_model/dbert_run_100')
+    peft_model.save_pretrained('./peft_song_bert_model/dbert_run_25')
 
 if __name__ == '__main__':
     main()
