@@ -1,4 +1,4 @@
-from transformers import Trainer, TrainingArguments, EvalPrediction
+from transformers import Trainer, TrainingArguments, EvalPrediction, EarlyStoppingCallback
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 
 class TrainerWrapper:
@@ -28,5 +28,6 @@ class TrainerWrapper:
             eval_dataset=eval_dataset,
             tokenizer=tokenizer,
             compute_metrics=self.compute_metrics,
+            callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
         )
         self.trainer.train()

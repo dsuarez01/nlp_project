@@ -22,7 +22,7 @@ def main():
     encoder_config = {
         'padding':'max_length',
         'truncation':True,
-        'max_length':256,
+        'max_length':512,
         'return_tensors':'pt',
     }
     preprocessor = DataPreprocessor('./distilbert-base-uncased', encoder_config)
@@ -30,8 +30,8 @@ def main():
     encoded_tags = preprocessor.encode_tags(songs_df['tag'])
     
     # save the tokenizer, pickle the label encoder
-    preprocessor.tokenizer.save_pretrained('./peft_song_bert_model')
-    with open('./peft_song_bert_model/label_encoder.pkl', 'wb') as le_file:
+    preprocessor.tokenizer.save_pretrained('./peft_song_bert_model/dbert_run_100')
+    with open('./peft_song_bert_model/dbert_run_100/label_encoder.pkl', 'wb') as le_file:
         pickle.dump(preprocessor.label_encoder, le_file)
 
     # instantiate song dataset, get train/val split
@@ -44,13 +44,14 @@ def main():
 
     # instantiate lora_config + model
     lora_config = {
-        'r':16,
-        'lora_alpha':16,
-        'lora_dropout':0.05,
-        'bias':'none',
-        'target_modules':'all-linear',
-        'task_type':'SEQ_CLS',
+        'r': 32,  # higher rank = higher expressivity
+        'lora_alpha': 64,  # higher alpha = better scaling
+        'lora_dropout': 0.1,  # increase dropout = prevent overfitting
+        'bias': 'none',
+        'target_modules': 'all-linear',
+        'task_type': 'SEQ_CLS',
     }
+
     model_wrapper = DistilBertModelWrapper(
         base_model_name='./distilbert-base-uncased',
         num_labels=preprocessor.get_num_classes(), # only ever call after encode_tags
@@ -60,22 +61,26 @@ def main():
 
     # set up training args and trainer
     training_args = {
-        'output_dir':'./results/dbert_run_100',
-        'run_name': 'dbert_run_100_112224',
-        'num_train_epochs':100,
-        'per_device_train_batch_size':16,
-        'per_device_eval_batch_size':16,
-        'warmup_steps':500,
-        'weight_decay':0.01,
-        'logging_dir':'./logs',
-        'logging_steps':10,
-        'eval_strategy':'epoch',
-        'save_strategy':'epoch',
-        'dataloader_num_workers':0,
+        'output_dir': './results/dbert_run_100',
+        'run_name': 'dbert_run_100',
+        'num_train_epochs': 100,
+        'per_device_train_batch_size': 16,
+        'per_device_eval_batch_size': 16,
+        'gradient_accumulation_steps': 2,
+        'learning_rate': 3e-5,
+        'fp16': True,
+        'warmup_steps': 1000,
+        'weight_decay': 0.01,
+        'logging_dir': './logs',
+        'logging_steps': 50,
+        'eval_strategy': 'epoch',
+        'save_strategy': 'epoch',
+        'save_total_limit': 3,
+        'dataloader_num_workers': 0,
         'dataloader_pin_memory': True,
-        'load_best_model_at_end':True,
-        'report_to':'wandb',
-        'disable_tqdm': True, # reduce I/O
+        'load_best_model_at_end': True,
+        'report_to': 'wandb',
+        'disable_tqdm': True,
     }
     
     trainer = TrainerWrapper(peft_model, training_args)
